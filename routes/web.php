@@ -1,11 +1,13 @@
 <?php
 
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\HomeController;
 use Illuminate\Support\Facades\Route;
 
 use App\Http\Controllers\AdController;
 
 Route::get('/', [AdController::class, 'index'])->name('home');
+Route::get('/ads', [HomeController::class, 'ads'])->name('ads');
 
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/dashboard', [AdController::class, 'dashboard'])->name('dashboard');

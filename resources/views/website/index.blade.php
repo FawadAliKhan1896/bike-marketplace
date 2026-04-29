@@ -124,7 +124,7 @@
                     <h2>Latest Ads</h2>
                     <p>Discover recently posted bikes from verified sellers</p>
                 </div>
-                <a href="#" class="view-all">See All Ads <i class="fas fa-chevron-right"></i></a>
+                <a href="{{ route('ads') }}" class="view-all">See All Ads <i class="fas fa-chevron-right"></i></a>
             </div>
 
             <div class="listing-grid">

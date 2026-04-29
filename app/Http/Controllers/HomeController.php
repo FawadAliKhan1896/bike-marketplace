@@ -10,4 +10,9 @@ class HomeController extends Controller
     {
         return view('website.index');
     }
+
+    public function ads()
+    {
+        return view('website.ads');
+    }
 }
