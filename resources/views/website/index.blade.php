@@ -20,8 +20,24 @@
 </head>
 <body>
 
+    <!-- Top Utility Bar -->
+    <div class="top-bar">
+        <div class="container top-bar-content">
+            <div class="top-bar-left">
+                <span><i class="fas fa-phone-alt"></i> Helpline: <strong>0331-3153136</strong></span>
+                <span class="divider">|</span>
+                <span><i class="fas fa-shield-alt"></i> 100% Certified Partner</span>
+            </div>
+            <div class="top-bar-right">
+                <a href="#" class="top-link"><i class="fas fa-balance-scale"></i> Compare Bikes</a>
+                <a href="#" class="top-link"><i class="fas fa-edit"></i> Write a Review</a>
+                <a href="#" class="top-link"><i class="fas fa-mobile-alt"></i> Download App</a>
+            </div>
+        </div>
+    </div>
+
     <!-- Main Header -->
-    <header class="header">
+    <header class="header" id="mainHeader">
         <div class="container">
             <div class="header-content">
                 <div class="logo">
@@ -31,24 +47,136 @@
                 </div>
                 
                 <nav class="nav">
-                    <a href="#" class="nav-link">Used Bikes</a>
-                    <a href="#" class="nav-link">New Bikes</a>
-                    <a href="#" class="nav-link">Certification</a>
-                    <a href="#" class="nav-link">Reviews</a>
-                    <a href="#" class="nav-link">News</a>
+                    <div class="nav-item">
+                        <a href="/" class="nav-link active">Home</a>
+                    </div>
+                    <div class="nav-item has-dropdown">
+                        <a href="#" class="nav-link">Used Bikes <i class="fas fa-chevron-down nav-arrow"></i></a>
+                        <div class="dropdown-menu">
+                            <div class="dropdown-grid">
+                                <div class="dropdown-column">
+                                    <h4>Find Used Bikes</h4>
+                                    <a href="#"><i class="fas fa-search"></i> Search Used Bikes</a>
+                                    <a href="#"><i class="fas fa-tags"></i> Dealership Listings</a>
+                                    <a href="#"><i class="fas fa-calculator"></i> Price Calculator</a>
+                                </div>
+                                <div class="dropdown-column">
+                                    <h4>Popular Brands</h4>
+                                    <a href="#">Honda</a>
+                                    <a href="#">Suzuki</a>
+                                    <a href="#">Yamaha</a>
+                                    <a href="#">Chongqing</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="nav-item has-dropdown">
+                        <a href="#" class="nav-link">New Bikes <i class="fas fa-chevron-down nav-arrow"></i></a>
+                        <div class="dropdown-menu">
+                            <div class="dropdown-grid">
+                                <div class="dropdown-column">
+                                    <h4>New Bike Portal</h4>
+                                    <a href="#"><i class="fas fa-motorcycle"></i> Brand New Bikes</a>
+                                    <a href="#"><i class="fas fa-list"></i> Price Lists 2026</a>
+                                    <a href="#"><i class="fas fa-balance-scale"></i> Compare Specs</a>
+                                </div>
+                                <div class="dropdown-column">
+                                    <h4>Categories</h4>
+                                    <a href="#">Sports Bikes</a>
+                                    <a href="#">Cruisers</a>
+                                    <a href="#">Electric Bikes</a>
+                                    <a href="#">Scooters</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="nav-item">
+                        <a href="#" class="nav-link">Certification</a>
+                    </div>
+                    <div class="nav-item">
+                        <a href="#" class="nav-link">Reviews</a>
+                    </div>
+                    <div class="nav-item">
+                        <a href="#" class="nav-link">News</a>
+                    </div>
                 </nav>
 
                 <div class="header-actions">
                     @auth
-                        <a href="{{ route('dashboard') }}" class="btn btn-outline" style="padding: 8px 16px;">Dashboard</a>
+                        <a href="{{ route('dashboard') }}" class="btn btn-outline-premium"><i class="fas fa-user-circle"></i> Dashboard</a>
                     @else
-                        <a href="{{ route('login') }}" class="btn btn-outline" style="padding: 8px 16px;">Sign In</a>
+                        <a href="{{ route('login') }}" class="btn btn-outline-premium"><i class="fas fa-sign-in-alt"></i> Sign In</a>
                     @endauth
-                    <a href="{{ route('ads.create') }}" class="btn btn-accent">Post an Ad</a>
+                    <a href="{{ route('ads.create') }}" class="btn btn-accent-premium">
+                        <span>Post an Ad</span>
+                        <i class="fas fa-plus-circle"></i>
+                    </a>
+                    
+                    <!-- Mobile Hamburger Menu Button -->
+                    <button class="mobile-menu-toggle" id="mobileMenuToggle" aria-label="Toggle Menu">
+                        <span class="bar"></span>
+                        <span class="bar"></span>
+                        <span class="bar"></span>
+                    </button>
                 </div>
             </div>
         </div>
     </header>
+
+    <!-- Mobile Drawer Overlay -->
+    <div class="mobile-drawer-overlay" id="mobileDrawerOverlay"></div>
+
+    <!-- Mobile Navigation Drawer -->
+    <div class="mobile-drawer" id="mobileDrawer">
+        <div class="drawer-header">
+            <div class="drawer-logo">
+                <img src="{{asset('assets/images/logo.png')}}" alt="BikeMarket Logo">
+            </div>
+            <button class="drawer-close" id="drawerClose" aria-label="Close Menu">
+                <i class="fas fa-times"></i>
+            </button>
+        </div>
+        
+        <div class="drawer-body">
+            <nav class="drawer-nav">
+                <a href="/" class="drawer-link active"><i class="fas fa-home"></i> Home</a>
+                
+                <div class="drawer-dropdown">
+                    <button class="drawer-dropdown-btn">Used Bikes <i class="fas fa-chevron-down"></i></button>
+                    <div class="drawer-dropdown-content">
+                        <a href="#">Search Used Bikes</a>
+                        <a href="#">Dealership Listings</a>
+                        <a href="#">Price Calculator</a>
+                    </div>
+                </div>
+
+                <div class="drawer-dropdown">
+                    <button class="drawer-dropdown-btn">New Bikes <i class="fas fa-chevron-down"></i></button>
+                    <div class="drawer-dropdown-content">
+                        <a href="#">Brand New Bikes</a>
+                        <a href="#">Price Lists 2026</a>
+                        <a href="#">Compare Specs</a>
+                    </div>
+                </div>
+
+                <a href="#" class="drawer-link"><i class="fas fa-check-circle"></i> Certification</a>
+                <a href="#" class="drawer-link"><i class="fas fa-star"></i> Reviews</a>
+                <a href="#" class="drawer-link"><i class="fas fa-newspaper"></i> News</a>
+            </nav>
+        </div>
+        
+        <div class="drawer-footer">
+            @auth
+                <a href="{{ route('dashboard') }}" class="btn btn-outline-premium" style="width: 100%; justify-content: center; margin-bottom: 12px;"><i class="fas fa-user-circle"></i> Dashboard</a>
+            @else
+                <a href="{{ route('login') }}" class="btn btn-outline-premium" style="width: 100%; justify-content: center; margin-bottom: 12px;"><i class="fas fa-sign-in-alt"></i> Sign In</a>
+            @endauth
+            <a href="{{ route('ads.create') }}" class="btn btn-accent-premium" style="width: 100%; justify-content: center;">
+                <span>Post an Ad</span>
+                <i class="fas fa-plus-circle"></i>
+            </a>
+        </div>
+    </div>
 
     <!-- Hero Section -->
     <section class="hero">
@@ -83,35 +211,64 @@
             <div class="section-header">
                 <div class="section-title">
                     <h2>Browse by Category</h2>
-                    <p>Find the type of ride that fits your lifestyle</p>
+                    <p>Explore bikes by your preferred category</p>
                 </div>
-                <a href="#" class="view-all">View All Categories <i class="fas fa-chevron-right"></i></a>
+                <a href="#" class="view-all">View all categories <i class="fas fa-chevron-right"></i></a>
             </div>
             <div class="category-grid">
-                <a href="#" class="category-item">
-                    <i class="fas fa-motorcycle"></i>
-                    <span>Sports Bikes</span>
-                </a>
-                <a href="#" class="category-item">
-                    <i class="fas fa-road"></i>
-                    <span>Cruisers</span>
-                </a>
-                <a href="#" class="category-item">
-                    <i class="fas fa-mountain"></i>
-                    <span>Dirt Bikes</span>
-                </a>
-                <a href="#" class="category-item">
-                    <i class="fas fa-motorcycle"></i>
-                    <span>Scooters</span>
-                </a>
-                <a href="#" class="category-item">
-                    <i class="fas fa-bolt"></i>
-                    <span>Electric</span>
-                </a>
-                <a href="#" class="category-item">
-                    <i class="fas fa-gear"></i>
-                    <span>Accessories</span>
-                </a>
+                <!-- Sports Bikes -->
+                <div class="category-card" onclick="window.location='#all-bikes'">
+                    <div class="category-card-image">
+                        <img src="{{ asset('assets/images/category (3).png') }}" alt="Sports Bikes">
+                    </div>
+                    <h3>Sports Bikes</h3>
+                    <p>Explore all</p>
+                </div>
+
+                <!-- Used Bikes -->
+                <div class="category-card" onclick="window.location='#used-bikes'">
+                    <div class="category-card-image">
+                        <img src="{{ asset('assets/images/category (4).png') }}" alt="Used Bikes">
+                    </div>
+                    <h3>Cruise Bikes</h3>
+                    <p>Best deals</p>
+                </div>
+
+                <!-- New Bikes -->
+                <div class="category-card" onclick="window.location='#new-bikes'">
+                    <div class="category-card-image">
+                        <img src="{{ asset('assets/images/category (2).png') }}" alt="New Bikes">
+                    </div>
+                    <h3>Dirt Bikes</h3>
+                    <p>Brand new</p>
+                </div>
+
+                <!-- Scooters -->
+                <div class="category-card" onclick="window.location='#scooters'">
+                    <div class="category-card-image">
+                        <img src="{{ asset('assets/images/category (5).png') }}" alt="Scooters">
+                    </div>
+                    <h3>Scooters</h3>
+                    <p>Stylish & practical</p>
+                </div>
+
+                <!-- Sports Bikes -->
+                <div class="category-card" onclick="window.location='#sports-bikes'">
+                    <div class="category-card-image">
+                        <img src="{{ asset('assets/images/category (6).png') }}" alt="Sports Bikes">
+                    </div>
+                    <h3>Electric Bikes</h3>
+                    <p>High performance</p>
+                </div>
+
+                <!-- ATV / Quads -->
+                <div class="category-card" onclick="window.location='#atv-quads'">
+                    <div class="category-card-image">
+                        <img src="{{ asset('assets/images/category (1).png') }}" alt="ATV / Quads">
+                    </div>
+                    <h3>Accessories</h3>
+                    <p>Adventure ready</p>
+                </div>
             </div>
         </div>
     </section>
@@ -326,5 +483,57 @@
         </div>
     </footer>
 
+    <!-- Header Scroll & Drawer Script -->
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const header = document.getElementById('mainHeader');
+            const mobileMenuToggle = document.getElementById('mobileMenuToggle');
+            const mobileDrawer = document.getElementById('mobileDrawer');
+            const mobileDrawerOverlay = document.getElementById('mobileDrawerOverlay');
+            const drawerClose = document.getElementById('drawerClose');
+            const drawerDropdownBtns = document.querySelectorAll('.drawer-dropdown-btn');
+
+            // Scroll Event for sticky header styling
+            window.addEventListener('scroll', () => {
+                if (window.scrollY > 50) {
+                    header.classList.add('header-scrolled');
+                } else {
+                    header.classList.remove('header-scrolled');
+                }
+            });
+
+            // Open Mobile Drawer
+            mobileMenuToggle.addEventListener('click', () => {
+                mobileMenuToggle.classList.toggle('active');
+                mobileDrawer.classList.toggle('active');
+                mobileDrawerOverlay.classList.toggle('active');
+                document.body.style.overflow = mobileDrawer.classList.contains('active') ? 'hidden' : '';
+            });
+
+            // Close Mobile Drawer
+            const closeDrawer = () => {
+                mobileMenuToggle.classList.remove('active');
+                mobileDrawer.classList.remove('active');
+                mobileDrawerOverlay.classList.remove('active');
+                document.body.style.overflow = '';
+            };
+
+            drawerClose.addEventListener('click', closeDrawer);
+            mobileDrawerOverlay.addEventListener('click', closeDrawer);
+
+            // Accordion toggle for mobile drawer dropdowns
+            drawerDropdownBtns.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    btn.classList.toggle('active');
+                    const content = btn.nextElementSibling;
+                    if (btn.classList.contains('active')) {
+                        content.style.maxHeight = content.scrollHeight + 'px';
+                    } else {
+                        content.style.maxHeight = '0';
+                    }
+                });
+            });
+        });
+    </script>
 </body>
 </html>
