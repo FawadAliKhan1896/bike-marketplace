@@ -24,7 +24,7 @@
     <div class="top-bar">
         <div class="container top-bar-content">
             <div class="top-bar-left">
-                <span><i class="fas fa-phone-alt"></i> Helpline: <strong>0331-3153136</strong></span>
+                <span><i class="fas fa-phone-alt"></i> Helpline: <strong>0312-3456789</strong></span>
                 <span class="divider">|</span>
                 <span><i class="fas fa-shield-alt"></i> 100% Certified Partner</span>
             </div>
@@ -56,16 +56,16 @@
                             <div class="dropdown-grid">
                                 <div class="dropdown-column">
                                     <h4>Find Used Bikes</h4>
-                                    <a href="#"><i class="fas fa-search"></i> Search Used Bikes</a>
-                                    <a href="#"><i class="fas fa-tags"></i> Dealership Listings</a>
-                                    <a href="#"><i class="fas fa-calculator"></i> Price Calculator</a>
+                                    <a href="{{ route('ads') }}"><i class="fas fa-search"></i> Search Used Bikes</a>
+                                    <a href="{{ route('dealerships') }}"><i class="fas fa-tags"></i> Dealership Listings</a>
+                                    <a href="{{ route('calculator') }}"><i class="fas fa-calculator"></i> Price Calculator</a>
                                 </div>
                                 <div class="dropdown-column">
                                     <h4>Popular Brands</h4>
-                                    <a href="#">Honda</a>
-                                    <a href="#">Suzuki</a>
-                                    <a href="#">Yamaha</a>
-                                    <a href="#">Chongqing</a>
+                                    <a href="{{ route('ads', ['brand' => 'Honda']) }}">Honda</a>
+                                    <a href="{{ route('ads', ['brand' => 'Suzuki']) }}">Suzuki</a>
+                                    <a href="{{ route('ads', ['brand' => 'Yamaha']) }}">Yamaha</a>
+                                    <a href="{{ route('ads', ['brand' => 'Chongqing']) }}">Chongqing</a>
                                 </div>
                             </div>
                         </div>
@@ -103,7 +103,11 @@
 
                 <div class="header-actions">
                     @auth
-                        <a href="{{ route('dashboard') }}" class="btn btn-outline-premium"><i class="fas fa-user-circle"></i> Dashboard</a>
+                        @if(Auth::user()->isAdmin())
+                            <a href="{{ route('admin.dashboard') }}" class="btn btn-outline-premium"><i class="fas fa-user-shield"></i> Admin Panel</a>
+                        @else
+                            <a href="{{ route('dashboard') }}" class="btn btn-outline-premium"><i class="fas fa-user-circle"></i> Dashboard</a>
+                        @endif
                     @else
                         <a href="{{ route('login') }}" class="btn btn-outline-premium"><i class="fas fa-sign-in-alt"></i> Sign In</a>
                     @endauth
@@ -144,9 +148,9 @@
                 <div class="drawer-dropdown">
                     <button class="drawer-dropdown-btn">Used Bikes <i class="fas fa-chevron-down"></i></button>
                     <div class="drawer-dropdown-content">
-                        <a href="#">Search Used Bikes</a>
-                        <a href="#">Dealership Listings</a>
-                        <a href="#">Price Calculator</a>
+                        <a href="{{ route('ads') }}">Search Used Bikes</a>
+                        <a href="{{ route('dealerships') }}">Dealership Listings</a>
+                        <a href="{{ route('calculator') }}">Price Calculator</a>
                     </div>
                 </div>
 
@@ -167,7 +171,11 @@
         
         <div class="drawer-footer">
             @auth
-                <a href="{{ route('dashboard') }}" class="btn btn-outline-premium" style="width: 100%; justify-content: center; margin-bottom: 12px;"><i class="fas fa-user-circle"></i> Dashboard</a>
+                @if(Auth::user()->isAdmin())
+                    <a href="{{ route('admin.dashboard') }}" class="btn btn-outline-premium" style="width: 100%; justify-content: center; margin-bottom: 12px;"><i class="fas fa-user-shield"></i> Admin Panel</a>
+                @else
+                    <a href="{{ route('dashboard') }}" class="btn btn-outline-premium" style="width: 100%; justify-content: center; margin-bottom: 12px;"><i class="fas fa-user-circle"></i> Dashboard</a>
+                @endif
             @else
                 <a href="{{ route('login') }}" class="btn btn-outline-premium" style="width: 100%; justify-content: center; margin-bottom: 12px;"><i class="fas fa-sign-in-alt"></i> Sign In</a>
             @endauth
