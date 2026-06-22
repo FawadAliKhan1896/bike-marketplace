@@ -21,12 +21,24 @@ class HomeController extends Controller
         // Text Search
         if ($request->filled('search')) {
             $search = $request->search;
-            $query->where(function($q) use ($search) {
-                $q->where('title', 'like', "%{$search}%")
-                  ->orWhere('brand', 'like', "%{$search}%")
-                  ->orWhere('model', 'like', "%{$search}%")
-                  ->orWhere('description', 'like', "%{$search}%");
+            $stopWords = ['in', 'at', 'on', 'with', 'for', 'the', 'a', 'an', 'of', 'and', 'to', 'or'];
+            $words = array_filter(explode(' ', $search), function($word) use ($stopWords) {
+                return !empty($word) && !in_array(strtolower($word), $stopWords);
             });
+
+            if (!empty($words)) {
+                $query->where(function($q) use ($words) {
+                    foreach ($words as $word) {
+                        $q->where(function($subQ) use ($word) {
+                            $subQ->where('title', 'like', "%{$word}%")
+                                 ->orWhere('brand', 'like', "%{$word}%")
+                                 ->orWhere('model', 'like', "%{$word}%")
+                                 ->orWhere('description', 'like', "%{$word}%")
+                                 ->orWhere('location', 'like', "%{$word}%");
+                        });
+                    }
+                });
+            }
         }
 
         // Brand Filter

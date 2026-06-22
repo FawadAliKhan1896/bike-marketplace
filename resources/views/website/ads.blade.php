@@ -166,10 +166,10 @@
                 
                 <nav class="nav">
                     <div class="nav-item">
-                        <a href="/" class="nav-link">Home</a>
+                        <a href="/" class="nav-link {{ request()->routeIs('home') ? 'active' : '' }}">Home</a>
                     </div>
                     <div class="nav-item has-dropdown">
-                        <a href="#" class="nav-link active">Used Bikes <i class="fas fa-chevron-down nav-arrow"></i></a>
+                        <a href="#" class="nav-link {{ request()->routeIs('ads*') ? 'active' : '' }}">Used Bikes <i class="fas fa-chevron-down nav-arrow"></i></a>
                         <div class="dropdown-menu">
                             <div class="dropdown-grid">
                                 <div class="dropdown-column">
@@ -183,15 +183,42 @@
                                     <a href="{{ route('ads', ['brand' => 'Honda']) }}">Honda</a>
                                     <a href="{{ route('ads', ['brand' => 'Suzuki']) }}">Suzuki</a>
                                     <a href="{{ route('ads', ['brand' => 'Yamaha']) }}">Yamaha</a>
+                                    <a href="{{ route('ads', ['brand' => 'Chongqing']) }}">Chongqing</a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="nav-item has-dropdown">
+                        <a href="#" class="nav-link">New Bikes <i class="fas fa-chevron-down nav-arrow"></i></a>
+                        <div class="dropdown-menu">
+                            <div class="dropdown-grid">
+                                <div class="dropdown-column">
+                                    <h4>New Bike Portal</h4>
+                                    <a href="#"><i class="fas fa-motorcycle"></i> Brand New Bikes</a>
+                                    <a href="#"><i class="fas fa-list"></i> Price Lists 2026</a>
+                                    <a href="#"><i class="fas fa-balance-scale"></i> Compare Specs</a>
+                                </div>
+                                <div class="dropdown-column">
+                                    <h4>Categories</h4>
+                                    <a href="#">Sports Bikes</a>
+                                    <a href="#">Cruisers</a>
+                                    <a href="#">Electric Bikes</a>
+                                    <a href="#">Scooters</a>
                                 </div>
                             </div>
                         </div>
                     </div>
                     <div class="nav-item">
-                        <a href="{{ route('dealerships') }}" class="nav-link">Dealerships</a>
+                        <a href="{{ route('dealerships') }}" class="nav-link {{ request()->routeIs('dealerships') ? 'active' : '' }}">Dealerships</a>
                     </div>
                     <div class="nav-item">
-                        <a href="{{ route('calculator') }}" class="nav-link">Price Calculator</a>
+                        <a href="{{ route('calculator') }}" class="nav-link {{ request()->routeIs('calculator') ? 'active' : '' }}">Price Calculator</a>
+                    </div>
+                    <div class="nav-item">
+                        <a href="#" class="nav-link">Reviews</a>
+                    </div>
+                    <div class="nav-item">
+                        <a href="#" class="nav-link">News</a>
                     </div>
                 </nav>
 
@@ -235,10 +262,30 @@
         
         <div class="drawer-body">
             <nav class="drawer-nav">
-                <a href="/" class="drawer-link"><i class="fas fa-home"></i> Home</a>
-                <a href="{{ route('ads') }}" class="drawer-link active"><i class="fas fa-search"></i> Search Used Bikes</a>
-                <a href="{{ route('dealerships') }}" class="drawer-link"><i class="fas fa-tags"></i> Dealership Listings</a>
-                <a href="{{ route('calculator') }}" class="drawer-link"><i class="fas fa-calculator"></i> Price Calculator</a>
+                <a href="/" class="drawer-link {{ request()->routeIs('home') ? 'active' : '' }}"><i class="fas fa-home"></i> Home</a>
+                
+                <div class="drawer-dropdown">
+                    <button class="drawer-dropdown-btn {{ request()->routeIs('ads*') ? 'active' : '' }}">Used Bikes <i class="fas fa-chevron-down"></i></button>
+                    <div class="drawer-dropdown-content" style="{{ request()->routeIs('ads*') ? 'max-height: none;' : '' }}">
+                        <a href="{{ route('ads') }}" class="{{ request()->routeIs('ads') ? 'active' : '' }}">Search Used Bikes</a>
+                        <a href="{{ route('dealerships') }}" class="{{ request()->routeIs('dealerships') ? 'active' : '' }}">Dealership Listings</a>
+                        <a href="{{ route('calculator') }}" class="{{ request()->routeIs('calculator') ? 'active' : '' }}">Price Calculator</a>
+                    </div>
+                </div>
+
+                <div class="drawer-dropdown">
+                    <button class="drawer-dropdown-btn">New Bikes <i class="fas fa-chevron-down"></i></button>
+                    <div class="drawer-dropdown-content">
+                        <a href="#">Brand New Bikes</a>
+                        <a href="#">Price Lists 2026</a>
+                        <a href="#">Compare Specs</a>
+                    </div>
+                </div>
+
+                <a href="{{ route('dealerships') }}" class="drawer-link {{ request()->routeIs('dealerships') ? 'active' : '' }}"><i class="fas fa-tags"></i> Dealerships</a>
+                <a href="{{ route('calculator') }}" class="drawer-link {{ request()->routeIs('calculator') ? 'active' : '' }}"><i class="fas fa-calculator"></i> Price Calculator</a>
+                <a href="#" class="drawer-link"><i class="fas fa-star"></i> Reviews</a>
+                <a href="#" class="drawer-link"><i class="fas fa-newspaper"></i> News</a>
             </nav>
         </div>
         
@@ -510,6 +557,17 @@
 
             drawerClose.addEventListener('click', closeDrawer);
             mobileDrawerOverlay.addEventListener('click', closeDrawer);
+
+            // Auto-submit filter form on text/number input change (when focus is lost)
+            const filterForm = document.getElementById('filterForm');
+            if (filterForm) {
+                const filterInputs = filterForm.querySelectorAll('input.filter-input');
+                filterInputs.forEach(input => {
+                    input.addEventListener('change', () => {
+                        filterForm.submit();
+                    });
+                });
+            }
         });
     </script>
 </body>

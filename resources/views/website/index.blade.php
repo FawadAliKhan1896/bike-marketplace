@@ -48,10 +48,10 @@
                 
                 <nav class="nav">
                     <div class="nav-item">
-                        <a href="/" class="nav-link active">Home</a>
+                        <a href="/" class="nav-link {{ request()->routeIs('home') ? 'active' : '' }}">Home</a>
                     </div>
                     <div class="nav-item has-dropdown">
-                        <a href="#" class="nav-link">Used Bikes <i class="fas fa-chevron-down nav-arrow"></i></a>
+                        <a href="#" class="nav-link {{ request()->routeIs('ads*') ? 'active' : '' }}">Used Bikes <i class="fas fa-chevron-down nav-arrow"></i></a>
                         <div class="dropdown-menu">
                             <div class="dropdown-grid">
                                 <div class="dropdown-column">
@@ -91,7 +91,10 @@
                         </div>
                     </div>
                     <div class="nav-item">
-                        <a href="#" class="nav-link">Certification</a>
+                        <a href="{{ route('dealerships') }}" class="nav-link {{ request()->routeIs('dealerships') ? 'active' : '' }}">Dealerships</a>
+                    </div>
+                    <div class="nav-item">
+                        <a href="{{ route('calculator') }}" class="nav-link {{ request()->routeIs('calculator') ? 'active' : '' }}">Price Calculator</a>
                     </div>
                     <div class="nav-item">
                         <a href="#" class="nav-link">Reviews</a>
@@ -143,14 +146,14 @@
         
         <div class="drawer-body">
             <nav class="drawer-nav">
-                <a href="/" class="drawer-link active"><i class="fas fa-home"></i> Home</a>
+                <a href="/" class="drawer-link {{ request()->routeIs('home') ? 'active' : '' }}"><i class="fas fa-home"></i> Home</a>
                 
                 <div class="drawer-dropdown">
-                    <button class="drawer-dropdown-btn">Used Bikes <i class="fas fa-chevron-down"></i></button>
-                    <div class="drawer-dropdown-content">
-                        <a href="{{ route('ads') }}">Search Used Bikes</a>
-                        <a href="{{ route('dealerships') }}">Dealership Listings</a>
-                        <a href="{{ route('calculator') }}">Price Calculator</a>
+                    <button class="drawer-dropdown-btn {{ request()->routeIs('ads*') ? 'active' : '' }}">Used Bikes <i class="fas fa-chevron-down"></i></button>
+                    <div class="drawer-dropdown-content" style="{{ request()->routeIs('ads*') ? 'max-height: none;' : '' }}">
+                        <a href="{{ route('ads') }}" class="{{ request()->routeIs('ads') ? 'active' : '' }}">Search Used Bikes</a>
+                        <a href="{{ route('dealerships') }}" class="{{ request()->routeIs('dealerships') ? 'active' : '' }}">Dealership Listings</a>
+                        <a href="{{ route('calculator') }}" class="{{ request()->routeIs('calculator') ? 'active' : '' }}">Price Calculator</a>
                     </div>
                 </div>
 
@@ -163,7 +166,8 @@
                     </div>
                 </div>
 
-                <a href="#" class="drawer-link"><i class="fas fa-check-circle"></i> Certification</a>
+                <a href="{{ route('dealerships') }}" class="drawer-link {{ request()->routeIs('dealerships') ? 'active' : '' }}"><i class="fas fa-tags"></i> Dealerships</a>
+                <a href="{{ route('calculator') }}" class="drawer-link {{ request()->routeIs('calculator') ? 'active' : '' }}"><i class="fas fa-calculator"></i> Price Calculator</a>
                 <a href="#" class="drawer-link"><i class="fas fa-star"></i> Reviews</a>
                 <a href="#" class="drawer-link"><i class="fas fa-newspaper"></i> News</a>
             </nav>
@@ -192,17 +196,17 @@
             <h1>Find the Perfect Bike for You</h1>
             <p>Search over 50,000+ verified listings across Pakistan</p>
             
-            <div class="hero-search-card">
-                <input type="text" placeholder="e.g. Honda CB 150R in Lahore">
-                <button class="btn btn-primary">Search Now</button>
-            </div>
+            <form action="{{ route('ads') }}" method="GET" class="hero-search-card">
+                <input type="text" name="search" placeholder="e.g. Honda CB 150R in Lahore" value="{{ request('search') }}">
+                <button type="submit" class="btn btn-primary">Search Now</button>
+            </form>
 
             <div style="margin-top: 20px; display: flex; justify-content: center; gap: 12px; font-size: 13px;">
                 <span style="opacity: 0.7;">Popular:</span>
-                <a href="#" style="text-decoration: underline; opacity: 0.9;">Honda 125</a>
-                <a href="#" style="text-decoration: underline; opacity: 0.9;">Suzuki GS 150</a>
-                <a href="#" style="text-decoration: underline; opacity: 0.9;">Yamaha YBR</a>
-                <a href="#" style="text-decoration: underline; opacity: 0.9;">Electric Bikes</a>
+                <a href="{{ route('ads', ['search' => 'Honda 125']) }}" style="text-decoration: underline; opacity: 0.9;">Honda 125</a>
+                <a href="{{ route('ads', ['search' => 'Suzuki GS 150']) }}" style="text-decoration: underline; opacity: 0.9;">Suzuki GS 150</a>
+                <a href="{{ route('ads', ['search' => 'Yamaha YBR']) }}" style="text-decoration: underline; opacity: 0.9;">Yamaha YBR</a>
+                <a href="{{ route('ads', ['search' => 'Electric']) }}" style="text-decoration: underline; opacity: 0.9;">Electric Bikes</a>
             </div>
 
             <div style="margin-top: 32px; display: flex; justify-content: center; gap: 24px; font-size: 14px; font-weight: 500;">
